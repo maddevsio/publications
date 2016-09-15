@@ -9,6 +9,16 @@
 ```bash
 docker run -d -p 8080:8080 -p 50000:50000 -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock jenkins
 ```
+Помимо стандартных предустановленных плагинов, необходимы:
+* CloudBees Docker
+* EnvInject
+* GitHub Authentication
+* HTML Publisher
+* JenkinsLint
+* Slack Notification
+* JUnit
+* ChuckNorris
+
 UI-тесты будут проходить на реальном телефоне, который подключен через usb к хосту. Для постоянного adb соединения с ним запустим еще один [контейнер](https://hub.docker.com/r/sorccu/adb/)
 ```bash
 docker run -d --privileged -v /dev/bus/usb:/dev/bus/usb --name adbd sorccu/adb
