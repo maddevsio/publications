@@ -195,3 +195,13 @@ Jenkinsfile так-же кладется в репозиторий проект�
 
 в разделе **Build Triggers** выбираем Poll SCM и задаем периодичность. После чего при мердже или коммите в мастер наблюдаем подобную картину:
 ![Stage View](https://github.com/maddevsio/publications/blob/master/pipeline-android/img/stage-view.png)
+
+### Полезные ссылки
+* [Pipeliene](https://jenkins.io/solutions/pipeline/)
+* [Pipeline Examples](https://github.com/jenkinsci/pipeline-examples)
+* [Pipeline Notifications](https://jenkins.io/blog/2016/07/18/pipline-notifications/)
+* [Top 10 Best Practices for Jenkins Pipeline Plugin](https://www.cloudbees.com/blog/top-10-best-practices-jenkins-pipeline-plugin)
+* [Docker Pipeline Plugin](https://go.cloudbees.com/docs/cloudbees-documentation/cje-user-guide/chapter-docker-workflow.html)
+* [CLOUDBEES + DOCKER](http://www.levvel.io/blog-post/building-devops-artifact-pipeline-for-docker-containers)
+* [Continuous integration for Android with Jenkins, Docker and AWS](http://flyingtophat.co.uk/blog/2016/07/07/continuous-integration-for-android-with-jenkins-docker-and-aws.html)
+* [Oracle Java + Docker](http://blog.takipi.com/running-java-on-docker-youre-breaking-the-law/)
