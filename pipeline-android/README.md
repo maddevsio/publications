@@ -199,6 +199,7 @@ Jenkinsfile так-же кладется в репозиторий проект�
 ### Полезные ссылки
 * [Pipeliene](https://jenkins.io/solutions/pipeline/)
 * [Pipeline Examples](https://github.com/jenkinsci/pipeline-examples)
+* [Parallelism with Jenkins Pipeline](https://www.cloudbees.com/blog/parallelism-and-distributed-builds-jenkins)
 * [Pipeline Notifications](https://jenkins.io/blog/2016/07/18/pipline-notifications/)
 * [Top 10 Best Practices for Jenkins Pipeline Plugin](https://www.cloudbees.com/blog/top-10-best-practices-jenkins-pipeline-plugin)
 * [Docker Pipeline Plugin](https://go.cloudbees.com/docs/cloudbees-documentation/cje-user-guide/chapter-docker-workflow.html)
