@@ -1,0 +1,98 @@
+#!groovy​
+try {
+  node() {
+    notifyBuild('STARTED')
+    deleteDir()
+
+    stage 'Checkout'
+    checkout scm
+
+    stage 'Create Env'
+    def buildEnv = docker.build('android-sdk', ".")
+    buildEnv.inside('--net container:adbd') {
+      sh '''mkdir -p ?/.android
+            keytool -genkey -v -keystore ?/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US"
+         '''
+
+      stage 'Build'
+      sh './gradlew clean assembleDebug'
+      archive 'app/build/outputs/**/app-debug.apk'
+
+      stage 'Quality'
+      sh './gradlew lint'
+      stash includes: '*/build/outputs/lint-results*.xml', name: 'lint-reports'
+
+      stage 'Test (unit)'
+      try {
+        sh './gradlew test'
+      } catch (err) {
+        currentBuild.result = 'UNSTABLE'
+      }
+      stash includes: '**/test-results/**/*.xml', name: 'junit-reports'
+
+      stage 'Test (device)'
+      try {
+        sh './gradlew connectedDebugAndroidTest'
+      } catch (err) {
+        currentBuild.result = 'UNSTABLE'
+      }
+      stash includes: 'app/build/reports/androidTests/connected/*.html', name: 'ui-reports'
+    }
+
+    stage 'Tag/Push'
+    if (currentBuild.result == 'UNSTABLE') {
+      echo 'Build is unstable. Skip tagging repo'
+    } else {
+      tagGitRepo()
+    }
+  }
+
+  stage 'Report'
+  node() {
+    deleteDir()
+
+    unstash 'junit-reports'
+    step([$class: 'JUnitResultArchiver', testResults: '**/test-results/**/*.xml'])
+
+    unstash 'lint-reports'
+    step([$class: 'LintPublisher', canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: '*/build/outputs/lint-results*.xml', unHealthy: ''])
+
+    unstash 'ui-reports'
+    publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'app/build/reports/androidTests/connected', reportFiles: 'index.html', reportName: 'UI Tests Report'])
+  }
+} catch (e) {
+  currentBuild.result = "FAILED"
+  throw e
+} finally {
+  notifyBuild(currentBuild.result)
+}
+
+def tagGitRepo () {
+  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'MyID', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+      sh("git tag -a some_tag -m 'Jenkins'")
+      sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO> --tags')
+  }
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+  // Default values
+  def colorName = 'danger'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'warning'
+  } else if (buildStatus == 'SUCCESSFUL') {
+    color = 'good'
+  } else if (buildStatus == 'UNSTABLE') {
+    color = 'warning'
+  } else {
+    color = 'danger'
+  }
+
+  slackSend (color: color, message: summary)
+}
