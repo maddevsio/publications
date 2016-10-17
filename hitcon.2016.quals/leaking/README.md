@@ -230,15 +230,15 @@ hitcon{4nother h34rtbleed in n0dejs? or do u solved by other way?}
 
 Если используем буффер 2048 - получаем вывод:
 
-![VirtualBox_Kali2016.2_16_10_2016_21_30_45](https://github.com/maddevsio/publications/blob/master/hitcon_quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_30_45.png)
+![VirtualBox_Kali2016.2_16_10_2016_21_30_45](https://github.com/maddevsio/publications/blob/master/hitcon.2016.quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_30_45.png)
 
 При использовании буффера в 1024 байта - получаем:
 
-![VirtualBox_Kali2016.2_16_10_2016_21_09_42](https://github.com/maddevsio/publications/blob/master/hitcon_quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_09_42.png)
+![VirtualBox_Kali2016.2_16_10_2016_21_09_42](https://github.com/maddevsio/publications/blob/master/hitcon.2016.quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_09_42.png)
 
 При использовании буфера в 200 байт, как приведено в ссылке, приходится не один раз отправить запрос, прежде чем получить вывод флага.
 
-![VirtualBox_Kali2016.2_16_10_2016_21_38_45](https://github.com/maddevsio/publications/blob/master/hitcon_quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_38_45.png)
+![VirtualBox_Kali2016.2_16_10_2016_21_38_45](https://github.com/maddevsio/publications/blob/master/hitcon.2016.quals/leaking/imgs/VirtualBox_Kali2016.2_16_10_2016_21_38_45.png)
 
 При этом если часто отправлять запросы то VM может выдавать ошибки timeout
 
