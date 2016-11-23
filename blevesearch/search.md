@@ -142,4 +142,4 @@ func (ss *SearchService) Search(query, channel string) (*bleve.SearchResult, err
 ```
 Соединив все вместе, мы получим бота, который сохраняет историю и может искать по ней без тяжеловесной жавы на примерах ElasticSearch, Solr.
 
-Полный код проекта доступен на [Github](https://github.com/maddevsio/slack_history_bot")
+Полный код проекта доступен на [Github](https://github.com/maddevsio/slack_history_bot)
